@@ -2,4 +2,4 @@
 
 정확도가 조금 낮습니다. 사용 못하는 수준은 아니지만 언리얼 만큼의 정확도를 기대하시면 힘들고.. 중간고사 끝나면 정확도를 높일께요..
 
-[![미리보기 영상](스크린샷 이미지)](https://www.youtube.com/watch?v=X-SW5h7bFJY)
+[![미리보기 영상](Image~/preview.png)](https://www.youtube.com/watch?v=X-SW5h7bFJY)
