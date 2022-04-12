@@ -103,10 +103,16 @@ namespace NKStudio
         {
             var meshFilter = tr.GetComponent<MeshFilter>();
 
+            //스키니드 매쉬 렌더러를 가진 경우 발 밑에서 쏘도록 처리합니다.
             if (meshFilter == null)
             {
-                Debug.LogError($"{tr.name} : 매쉬필터가 없습니다.");
-                return Vector2.zero;
+                var position = tr.position;
+                return resultType switch
+                {
+                    ResultType.X => new Vector2(position.x, position.x),
+                    ResultType.Z => new Vector2(position.z, position.z),
+                    _ => throw new ArgumentOutOfRangeException(nameof(resultType), resultType, null)
+                };
             }
 
             var mesh = meshFilter.sharedMesh;
@@ -116,6 +122,7 @@ namespace NKStudio
             float min;
             float max;
 
+            //초기화
             switch (resultType)
             {
                 case ResultType.X:
@@ -169,10 +176,7 @@ namespace NKStudio
 
             //매쉬렌더러가 없으면 객체 피봇 위치를 반환
             if (meshFilter == null)
-            {
-                Debug.LogError($"{tr.name} : 매쉬 필터가 없습니다.");
-                return tr.transform.position.y;
-            }
+                return tr.position.y;
 
             var mesh = meshFilter.sharedMesh;
 
