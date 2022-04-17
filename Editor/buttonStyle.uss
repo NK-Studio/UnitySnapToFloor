@@ -1,0 +1,6 @@
+.applyButton {
+}
+
+.applyButton:active {
+    background-color: rgb(70, 96, 124);
+}

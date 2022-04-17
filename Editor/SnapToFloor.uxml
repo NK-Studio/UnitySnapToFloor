@@ -1,6 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/SnapToFloor/Editor/buttonStyle.uss?fileID=7433441132597879392&amp;guid=35d00d85ba5c0c8498d814b6c5bfb85c&amp;type=3#buttonStyle" />
     <ui:Label text="Settings" display-tooltip-when-elided="true" style="font-size: 20px; margin-left: 8px; margin-top: 8px; -unity-font-style: bold;" />
-    <ui:VisualElement name="Area" style="height: 33px; flex-direction: row;">
-        <ui:DropdownField label="Use Mode?" index="-1" choices="3D,2D,Both(2.5D)" tooltip="2D 또는 3D를 선택할 수 있습니다." name="unity-drop" style="width: 97%; align-items: center; margin-left: 8px; margin-right: 0;" />
+    <ui:VisualElement name="Area" style="height: 33px; flex-direction: row; width: auto; justify-content: flex-start; align-items: center;">
+        <ui:DropdownField label="Use Mode?" index="-1" choices="3D,2D,Both(2.5D)" tooltip="2D 또는 3D를 선택할 수 있습니다." name="unity-drop" style="width: 100%; align-items: auto; margin-left: 8px; margin-right: 0; flex-direction: row; justify-content: flex-start; padding-right: 11px;" />
+    </ui:VisualElement>
+    <ui:VisualElement style="height: 33px; flex-direction: column; justify-content: center;">
+        <ui:Button text="Apply" display-tooltip-when-elided="true" name="unity-apply" class="applyButton" />
     </ui:VisualElement>
 </ui:UXML>

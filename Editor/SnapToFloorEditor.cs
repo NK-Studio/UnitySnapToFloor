@@ -1,11 +1,15 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class SnapToFloorEditor : EditorWindow
 {
+    
+    
     [MenuItem("Window/SnapToFloor")]
     public static void Title()
     {
@@ -20,8 +24,11 @@ public class SnapToFloorEditor : EditorWindow
         // 각 편집기 창에는 루트 VisualElement 개체가 포함되어 있습니다.
         VisualElement root = rootVisualElement;
 
+        //UXML 경로
+        string path = AssetDatabase.GUIDToAssetPath("5e2b8bced1177ba4fb631ef5aa5fe2eb");
+
         //UXML 가져오기
-        var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/UnitySnapToFloor/Editor/SnapToFloor.uxml");
+        var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(path);
         VisualElement container = visualTree.Instantiate();
         root.Add(container);
 
@@ -32,6 +39,8 @@ public class SnapToFloorEditor : EditorWindow
 
         //드롭다운 데이터 가져오기
         DropdownField dropdownField = root.Q<DropdownField>("unity-drop");
+        Button button = root.Q<Button>("unity-apply");
+
 
         //드롭다운 인덱스 가져오기
         var dropdownIndex = EditorPrefs.GetInt("SnapToFloor-Mode", (int) behaviorMode);
@@ -41,41 +50,63 @@ public class SnapToFloorEditor : EditorWindow
         List<string> defines = PlayerSettings
             .GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup).Split(';').ToList();
 
+        int modeIndex = dropdownIndex;
         dropdownField.RegisterCallback<ChangeEvent<string>>(evt =>
         {
             string mode = evt.newValue;
-            int modeIndex;
 
             switch (mode)
             {
                 case "3D":
                     modeIndex = 0;
-                    defines.Add("SNAP2FLOOR_3D");
-                    defines.Remove("SNAP2FLOOR_2D");
-                    defines.Remove("SNAP2FLOOR_BOTH");
                     break;
                 case "2D":
                     modeIndex = 1;
-                    defines.Add("SNAP2FLOOR_2D");
-                    defines.Remove("SNAP2FLOOR_3D");
-                    defines.Remove("SNAP2FLOOR_BOTH");
                     break;
                 default:
                     modeIndex = 2;
-                    defines.Add("SNAP2FLOOR_BOTH");
-                    defines.Remove("SNAP2FLOOR_2D");
-                    defines.Remove("SNAP2FLOOR_3D");
                     break;
             }
-            //디파인 중복 제거
-            defines = defines.Distinct().ToList();
-            
-            Debug.Log("Change Update");
-            
-            //문자열 다시 합친후 심볼(디파인) 적용 
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, string.Join(";", defines.ToArray()));
-            
-            EditorPrefs.SetInt("SnapToFloor-Mode", modeIndex);
         });
+
+
+        
+        button.RegisterCallback<MouseUpEvent>(evt =>
+        {
+            EditorCoroutineUtility.StartCoroutineOwnerless(RefreshDefine(modeIndex,defines));
+        });
+    }
+
+    private IEnumerator RefreshDefine(int modeIndex, List<string> defines)
+    {
+        switch (modeIndex)
+        {
+            case 0:
+                defines.Add("SNAP2FLOOR_3D");
+                defines.Remove("SNAP2FLOOR_2D");
+                defines.Remove("SNAP2FLOOR_BOTH");
+                break;
+            case 1:
+                defines.Add("SNAP2FLOOR_2D");
+                defines.Remove("SNAP2FLOOR_3D");
+                defines.Remove("SNAP2FLOOR_BOTH");
+                break;
+            case 2:
+                defines.Add("SNAP2FLOOR_BOTH");
+                defines.Remove("SNAP2FLOOR_2D");
+                defines.Remove("SNAP2FLOOR_3D");
+                break;
+        }
+
+        //디파인 중복 제거
+        defines = defines.Distinct().ToList();
+            
+        //문자열 다시 합친후 심볼(디파인) 적용 
+        PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup,
+            string.Join(";", defines.ToArray()));
+
+        EditorPrefs.SetInt("SnapToFloor-Mode", modeIndex);
+        
+        yield return null;
     }
 }
