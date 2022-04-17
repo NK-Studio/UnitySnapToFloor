@@ -14,31 +14,120 @@ namespace NKStudio
 
         //스냅이 허용되는 높이
         private const float Height = 1000f;
-        
+
         //경로를 지정하고, true를 해서 안보이게 하자, %는 윈도우는 컨트롤, 맥은 커맨드 키에 해당된다.
-        [MenuItem("Edit/Surface Snapping _END")]
+        [MenuItem("Edit/SnapToFloor _END")]
         public static void Snap2Surface()
         {
             //Selection은 현재 에디터에서 선택된 오브젝트를 뜻한다.
             foreach (var transform in Selection.transforms)
             {
+#if SNAP2FLOOR_2D
+                SpriteRenderer[] hasSpriteRenders = transform.GetComponentsInChildren<SpriteRenderer>();
+                bool hasChildSpriteRender = false;
+                Collider2D hasCollider = transform.GetComponent<Collider2D>();
+
+                //자식이 SpriteRender를 가지고 있는지 체크합니다.
+                foreach (var spriteRenderer in hasSpriteRenders)
+                {
+                    if (spriteRenderer != null)
+                    {
+                        hasChildSpriteRender = true;
+                        goto FindSpriteRender;
+                    }
+                }
+
+                FindSpriteRender:
+                //경고 메세지
+                if (!hasChildSpriteRender && hasCollider == null)
+                {
+                    Debug.LogError("Could not find sprite renderer and collider 2D");
+                    return;
+                }
+                else if (hasCollider == null)
+                {
+                    Debug.LogError("Could not find collider 2D");
+                    return;
+                }
+                else if (!hasChildSpriteRender)
+                {
+                    Debug.LogError("Could not find sprite renderer");
+                    return;
+                }
+
                 #region 매쉬의 버텍스에 대한 월드 계산 위치
 
-                Vector2 minMaxByX = GetMinMaxRangeByVertex(ResultType.X, transform);
+                Vector3 minMaxDistance = GetMinMaxRangeByVertex2D(transform);
+
+                float footYPosition = GetMinYVertex2D(transform);
+
+                #endregion
+
+                float distance = minMaxDistance.z;
+
+                float startPosition = minMaxDistance.x;
+
+                //간격에 따른 알맞는 간격을 계산한다.
+                float intervalValue = CalculateSeparationByDistance(distance);
+
+                //간격에 알맞는 알갱이를 가져옴
+                int numberOfGrains = CalculatePointCount(distance, intervalValue);
+                int nowNumberOfGrains = numberOfGrains + 1;
+
+                Vector3 position = transform.position;
+                float? moveY = null;
+
+                //원하는 알갱이 수 만큼 반복한다
+                //- 원래는 내가 원하는 간격을 제시하면 그것에 맞는 알갱이를 뿌린다.
+                for (int i = 0; i < nowNumberOfGrains; i++)
+                {
+                    //그려낼 위치에서 사이간격에 맞춰 그려냄
+                    float xx = startPosition + intervalValue * i;
+
+                    Vector3 drawPosition = new Vector3(xx, footYPosition, position.z);
+
+                    //각각의 오브젝트의 위치에서 아래 방향으로 Ray를 쏜다.
+                    RaycastHit2D[] hits = Physics2D.RaycastAll(drawPosition, Vector2.down, Height);
+
+                    //각각 hit정보 확인
+                    foreach (var hit in hits)
+                    {
+                        //자기 자신의 콜라이더를 맞춘 경우 pass : 예외 처리
+                        if (hit.collider.gameObject == transform.gameObject)
+                            continue;
+
+                        if (moveY == null)
+                            moveY = hit.distance;
+                        else
+                        {
+                            if (moveY > hit.distance)
+                                moveY = hit.distance;
+                        }
+                    }
+                }
+
+                position.y -= moveY ?? 0f;
+                //hit된 위치로 이동시킨다.
+                transform.position = position;
+#endif
+#if SNAP2FLOOR_3D
+                #region 매쉬의 버텍스에 대한 월드 계산 위치
+
+                Vector2 minMaxByX = GetMinMaxRangeByVertex3D(ResultType.X, transform);
                 var vx1 = Vector3.zero;
                 vx1.x = minMaxByX.x;
 
                 var vx2 = Vector3.zero;
                 vx2.x = minMaxByX.y;
 
-                var minMaxByZ = GetMinMaxRangeByVertex(ResultType.Z, transform);
+                var minMaxByZ = GetMinMaxRangeByVertex3D(ResultType.Z, transform);
                 var vz1 = Vector3.zero;
                 vz1.x = minMaxByZ.x;
 
                 var vz2 = Vector3.zero;
                 vz2.x = minMaxByZ.y;
 
-                float footYPosition = GetMinYVertex(transform);
+                float footYPosition = GetMinYVertex3D(transform);
 
                 #endregion
 
@@ -96,10 +185,48 @@ namespace NKStudio
                 position.y -= moveY ?? 0f;
                 //hit된 위치로 이동시킨다.
                 transform.position = position;
+#endif
             }
         }
 
-        private static Vector2 GetMinMaxRangeByVertex(ResultType resultType, Transform tr)
+        /// <summary>
+        /// x,y는 min,max를 반환하고, z는 두 점의 거리를 반환합니다.
+        /// </summary>
+        /// <param name="tr"></param>
+        /// <returns></returns>
+        private static Vector3 GetMinMaxRangeByVertex2D(Transform tr)
+        {
+            Collider2D boxCollider2D = tr.GetComponent<Collider2D>();
+
+            Bounds bounds = boxCollider2D.bounds;
+            float y = bounds.min.y;
+
+            Vector3 min = bounds.min;
+            Vector3 max = bounds.max;
+            max.y = y;
+
+            var distance = Vector2.Distance(min, max);
+
+            return new Vector3(min.x, max.x, distance);
+        }
+
+        /// <summary>
+        /// 바운딩 박스의 minY를 반환합니다.
+        /// </summary>
+        /// <param name="tr"></param>
+        /// <returns></returns>
+        private static float GetMinYVertex2D(Transform tr)
+        {
+            Collider2D boxCollider2D = tr.GetComponent<Collider2D>();
+
+            Bounds bounds = boxCollider2D.bounds;
+
+            float worldY = bounds.min.y;
+
+            return worldY;
+        }
+
+        private static Vector2 GetMinMaxRangeByVertex3D(ResultType resultType, Transform tr)
         {
             var meshFilter = tr.GetComponent<MeshFilter>();
 
@@ -170,7 +297,7 @@ namespace NKStudio
             return new Vector2(min, max);
         }
 
-        private static float GetMinYVertex(Transform tr)
+        private static float GetMinYVertex3D(Transform tr)
         {
             MeshFilter meshFilter = tr.GetComponent<MeshFilter>();
 
