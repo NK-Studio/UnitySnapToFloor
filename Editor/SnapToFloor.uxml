@@ -1,15 +1,15 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UnitySnapToFloor/Editor/buttonStyle.uss?fileID=7433441132597879392&amp;guid=35d00d85ba5c0c8498d814b6c5bfb85c&amp;type=3#buttonStyle" />
+    <Style src="project://database/Packages/com.nkstudio.snap-to-floor/Editor/buttonStyle.uss?fileID=7433441132597879392&amp;guid=35d00d85ba5c0c8498d814b6c5bfb85c&amp;type=3#buttonStyle" />
     <ui:Label text="Settings" display-tooltip-when-elided="true" style="font-size: 20px; margin-left: 8px; margin-top: 8px; -unity-font-style: bold;" />
     <ui:VisualElement style="width: 100%; height: 75px; margin-top: 0; margin-bottom: 0; margin-left: 0; margin-right: 0; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; flex-direction: row; align-items: center; justify-content: center;">
-        <ui:VisualElement name="Magnetic-icon" style="background-image: url(&apos;project://database/Assets/UnitySnapToFloor/Editor/magnet.png?fileID=2800000&amp;guid=eb8607796fcdb0446bd1e943184e9991&amp;type=3#magnet&apos;); width: 45px; height: 27px; -unity-background-scale-mode: scale-to-fit; flex-direction: column-reverse;" />
+        <ui:VisualElement name="Magnetic-icon" style="background-image: url(&apos;project://database/Packages/com.nkstudio.snap-to-floor/Editor/magnet.png?fileID=2800000&amp;guid=eb8607796fcdb0446bd1e943184e9991&amp;type=3#magnet&apos;); width: 45px; height: 27px; -unity-background-scale-mode: scale-to-fit; flex-direction: column-reverse;" />
         <ui:Label text="SnapToFloor" display-tooltip-when-elided="true" style="font-size: 26px; -unity-text-align: middle-center;" />
     </ui:VisualElement>
     <ui:VisualElement name="Area" style="height: auto; flex-direction: column; width: auto; justify-content: flex-start; align-items: stretch;">
         <ui:DropdownField label="Use Mode?" index="-1" choices="3D,2D,Both(2.5D)" tooltip="2D 또는 3D를 선택할 수 있습니다." name="unity-drop" style="-unity-text-align: middle-left; -unity-font-style: bold; align-items: stretch;" />
         <ui:Button text="Apply" display-tooltip-when-elided="true" name="unity-apply" class="applyButton" />
-        <ui:Label text="사용법 :" display-tooltip-when-elided="true" style="white-space: normal; margin-left: 3px; margin-right: 3px; margin-top: 5px; margin-bottom: 1px; -unity-font-style: bold;" />
-        <ui:Label text="현재 유니티 모드가 2D인지, 3D인지 체크해주세요." display-tooltip-when-elided="true" style="white-space: normal; margin-left: 3px; margin-right: 3px; margin-top: 2px; margin-bottom: 1px; height: 34px;" />
+        <ui:Label text="How to use?" display-tooltip-when-elided="true" style="white-space: normal; margin-left: 3px; margin-right: 3px; margin-top: 5px; margin-bottom: 1px; -unity-font-style: bold;" />
+        <ui:Label text="Check whether the Unity mode is 2D or 3D." display-tooltip-when-elided="true" tooltip="현재 유니티 모드가 2D인지, 3D인지 체크해주세요." style="white-space: normal; margin-left: 3px; margin-right: 3px; margin-top: 2px; margin-bottom: 1px; height: 34px;" />
     </ui:VisualElement>
     <ui:VisualElement name="AreaBottom" style="justify-content: flex-end; align-items: stretch; flex-grow: 1;">
         <ui:DropdownField label="Show at StartUp" index="-1" choices="Always,Never" tooltip="유니티를 열때마다 설정창을 오픈합니다." name="unity-show" style="-unity-text-align: middle-left; align-items: stretch; justify-content: space-around;" />
