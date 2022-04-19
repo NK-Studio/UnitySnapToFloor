@@ -8,4 +8,4 @@
 2.1.0부터 세팅창을 제공합니다.
 
 사진 클릭시 예시를 볼 수 있습니다.
-[![미리보기 영상](Image~/preview.png)](https://www.youtube.com/watch?v=X-SW5h7bFJY)~~~~
+[![미리보기 영상](Image~/preview.png)](https://www.youtube.com/watch?v=X-SW5h7bFJY)
