@@ -27,13 +27,7 @@ public class SnapToFloorEditor : EditorWindow
         wnd.minSize = new Vector2(240, 235);
         wnd.maxSize = new Vector2(240, 235);
     }
-    
-    [MenuItem("Tools/SnapToFloor Remove")]
-    public static void ppap()
-    {
-        EditorPrefs.DeleteAll();
-    }
-    
+       
     [InitializeOnLoadMethod]
     private static void Init()
     {
