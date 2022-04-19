@@ -31,7 +31,7 @@ public class SnapToFloorEditor : EditorWindow
     [InitializeOnLoadMethod]
     private static void Init()
     {
-        bool autoShowOnStartup = EditorPrefs.GetInt("SnapToFloor-show", 0) == 0;
+        bool autoShowOnStartup = EditorPrefs.GetInt($"SnapToFloor-show-{Application.productName}", 0) == 0;
 
         if (ShowOnStartup && autoShowOnStartup)
             EditorApplication.update += ShowAtStartup;
@@ -79,7 +79,7 @@ public class SnapToFloorEditor : EditorWindow
         var modeDropdownIndex = EditorPrefs.GetInt($"SnapToFloor-Mode-{Application.productName}", (int) behaviorMode);
         modeDropDown.index = modeDropdownIndex;
 
-        var showDropdownIndex = EditorPrefs.GetInt("SnapToFloor-show", 0);
+        var showDropdownIndex = EditorPrefs.GetInt($"SnapToFloor-show-{Application.productName}", 0);
         showDropDown.index = showDropdownIndex;
 
         //현재 선택된 빌트 타겟에 처리합니다.
@@ -120,7 +120,7 @@ public class SnapToFloorEditor : EditorWindow
                     break;
             }
 
-            EditorPrefs.SetInt("SnapToFloor-show", showIndex);
+            EditorPrefs.SetInt($"SnapToFloor-show-{Application.productName}", showIndex);
         });
 
 
