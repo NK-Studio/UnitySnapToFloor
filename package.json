@@ -1,6 +1,6 @@
 {
   "name": "com.nkstudio.snap-to-floor",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "displayName": "SnapToFloor",
   "unity": "2019.1",
   "description": "오브젝트를 선택하고 End키를 누르면 땅에 촥 붙습니다.",
