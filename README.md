@@ -1,6 +1,7 @@
 언리얼처럼 End키를 사용한 오브젝트 스냅핑 기능을 제공합니다.
 
 중요! : Skinned Mesh Renderer는 중심 앵커가 발 밑에 있어야 재대로 동작합니다.
+
 2.0.0 부터 2D도 지원합니다.
 
 ![세팅창 이미지](Image~/example-settings.png)
