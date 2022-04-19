@@ -27,7 +27,13 @@ public class SnapToFloorEditor : EditorWindow
         wnd.minSize = new Vector2(240, 235);
         wnd.maxSize = new Vector2(240, 235);
     }
-
+    
+    [MenuItem("Tools/SnapToFloor Remove")]
+    public static void ppap()
+    {
+        EditorPrefs.DeleteAll();
+    }
+    
     [InitializeOnLoadMethod]
     private static void Init()
     {
@@ -86,11 +92,11 @@ public class SnapToFloorEditor : EditorWindow
         List<string> defines = PlayerSettings
             .GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup).Split(';').ToList();
 
-        int modeIndex = showDropdownIndex;
+        int modeIndex = modeDropdownIndex;
         modeDropDown.RegisterCallback<ChangeEvent<string>>(evt =>
         {
             string mode = evt.newValue;
-
+            
             switch (mode)
             {
                 case "3D":
@@ -104,7 +110,7 @@ public class SnapToFloorEditor : EditorWindow
                     break;
             }
         });
-
+        
         int showIndex = showDropdownIndex;
         showDropDown.RegisterCallback<ChangeEvent<string>>(evt =>
         {
@@ -150,14 +156,14 @@ public class SnapToFloorEditor : EditorWindow
                 defines.Remove("SNAP2FLOOR_3D");
                 break;
         }
-
+        
         //디파인 중복 제거
         defines = defines.Distinct().ToList();
-
+        
         //문자열 다시 합친후 심볼(디파인) 적용 
         PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup,
             string.Join(";", defines.ToArray()));
-
+        
         EditorPrefs.SetInt($"SnapToFloor-Mode-{Application.productName}", modeIndex);
 
         yield return null;
