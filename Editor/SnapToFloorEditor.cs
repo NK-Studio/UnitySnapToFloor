@@ -8,13 +8,46 @@ using UnityEngine.UIElements;
 
 public class SnapToFloorEditor : EditorWindow
 {
-    
-    
+    private const string KShowOnStartupPreference = "NKStudio.SnapToFloor.ShowAtStartup";
+
+    private static bool ShowOnStartup
+    {
+        get => EditorPrefs.GetBool(KShowOnStartupPreference, true);
+        set
+        {
+            if (value != ShowOnStartup) EditorPrefs.SetBool(KShowOnStartupPreference, value);
+        }
+    }
+
     [MenuItem("Window/SnapToFloor")]
     public static void Title()
     {
         SnapToFloorEditor wnd = GetWindow<SnapToFloorEditor>();
         wnd.titleContent = new GUIContent("SnapToFloorSetting");
+        wnd.minSize = new Vector2(240, 235);
+        wnd.maxSize = new Vector2(240, 235);
+    }
+
+    [InitializeOnLoadMethod]
+    private static void Init()
+    {
+        bool autoShowOnStartup = EditorPrefs.GetInt("SnapToFloor-show", 0) == 0;
+
+        if (ShowOnStartup && autoShowOnStartup)
+            EditorApplication.update += ShowAtStartup;
+    }
+
+    private void OnDestroy()
+    {
+        EditorApplication.update -= ShowAtStartup;
+    }
+
+    static void ShowAtStartup()
+    {
+        if (!Application.isPlaying) 
+            Title();
+
+        EditorApplication.update -= ShowAtStartup;
     }
 
     public void CreateGUI()
@@ -38,20 +71,24 @@ public class SnapToFloorEditor : EditorWindow
         var behaviorMode = EditorSettings.defaultBehaviorMode;
 
         //드롭다운 데이터 가져오기
-        DropdownField dropdownField = root.Q<DropdownField>("unity-drop");
+        DropdownField modeDropDown = root.Q<DropdownField>("unity-drop");
+        DropdownField showDropDown = root.Q<DropdownField>("unity-show");
         Button button = root.Q<Button>("unity-apply");
 
 
         //드롭다운 인덱스 가져오기
-        var dropdownIndex = EditorPrefs.GetInt("SnapToFloor-Mode", (int) behaviorMode);
-        dropdownField.index = dropdownIndex;
+        var modeDropdownIndex = EditorPrefs.GetInt("SnapToFloor-Mode", (int) behaviorMode);
+        modeDropDown.index = modeDropdownIndex;
+
+        var showDropdownIndex = EditorPrefs.GetInt("SnapToFloor-show", 0);
+        showDropDown.index = showDropdownIndex;
 
         //현재 선택된 빌트 타겟에 처리합니다.
         List<string> defines = PlayerSettings
             .GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup).Split(';').ToList();
 
-        int modeIndex = dropdownIndex;
-        dropdownField.RegisterCallback<ChangeEvent<string>>(evt =>
+        int modeIndex = showDropdownIndex;
+        modeDropDown.RegisterCallback<ChangeEvent<string>>(evt =>
         {
             string mode = evt.newValue;
 
@@ -69,11 +106,28 @@ public class SnapToFloorEditor : EditorWindow
             }
         });
 
+        int showIndex = showDropdownIndex;
+        showDropDown.RegisterCallback<ChangeEvent<string>>(evt =>
+        {
+            string show = evt.newValue;
 
-        
+            switch (show)
+            {
+                case "Always":
+                    showIndex = 0;
+                    break;
+                case "Never":
+                    showIndex = 1;
+                    break;
+            }
+
+            EditorPrefs.SetInt("SnapToFloor-show", showIndex);
+        });
+
+
         button.RegisterCallback<MouseUpEvent>(evt =>
         {
-            EditorCoroutineUtility.StartCoroutineOwnerless(RefreshDefine(modeIndex,defines));
+            EditorCoroutineUtility.StartCoroutineOwnerless(RefreshDefine(modeIndex, defines));
         });
     }
 
@@ -100,13 +154,13 @@ public class SnapToFloorEditor : EditorWindow
 
         //디파인 중복 제거
         defines = defines.Distinct().ToList();
-            
+
         //문자열 다시 합친후 심볼(디파인) 적용 
         PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup,
             string.Join(";", defines.ToArray()));
 
         EditorPrefs.SetInt("SnapToFloor-Mode", modeIndex);
-        
+
         yield return null;
     }
 }
