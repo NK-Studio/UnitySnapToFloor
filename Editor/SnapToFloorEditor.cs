@@ -44,7 +44,7 @@ public class SnapToFloorEditor : EditorWindow
 
     static void ShowAtStartup()
     {
-        if (!Application.isPlaying) 
+        if (!Application.isPlaying)
             Title();
 
         EditorApplication.update -= ShowAtStartup;
@@ -75,9 +75,8 @@ public class SnapToFloorEditor : EditorWindow
         DropdownField showDropDown = root.Q<DropdownField>("unity-show");
         Button button = root.Q<Button>("unity-apply");
 
-
         //드롭다운 인덱스 가져오기
-        var modeDropdownIndex = EditorPrefs.GetInt("SnapToFloor-Mode", (int) behaviorMode);
+        var modeDropdownIndex = EditorPrefs.GetInt($"SnapToFloor-Mode-{Application.productName}", (int) behaviorMode);
         modeDropDown.index = modeDropdownIndex;
 
         var showDropdownIndex = EditorPrefs.GetInt("SnapToFloor-show", 0);
@@ -159,7 +158,7 @@ public class SnapToFloorEditor : EditorWindow
         PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup,
             string.Join(";", defines.ToArray()));
 
-        EditorPrefs.SetInt("SnapToFloor-Mode", modeIndex);
+        EditorPrefs.SetInt($"SnapToFloor-Mode-{Application.productName}", modeIndex);
 
         yield return null;
     }
