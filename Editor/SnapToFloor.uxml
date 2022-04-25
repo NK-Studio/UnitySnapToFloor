@@ -7,9 +7,9 @@
             <ui:Label text="SnapToFloor" display-tooltip-when-elided="true" style="font-size: 26px; -unity-text-align: middle-center;" />
         </ui:VisualElement>
         <ui:VisualElement name="Area" style="height: auto; flex-direction: column; width: auto; justify-content: flex-start; align-items: stretch;">
-            <ui:VisualElement style="justify-content: space-between; flex-direction: row; align-items: stretch;">
-                <uie:ObjectField label="STF Settings Field" name="unity-setting-filed" style="-unity-font-style: normal; flex-wrap: nowrap; width: 84%; align-items: center; justify-content: flex-end; max-height: none;" />
-                <ui:Button text="Create" display-tooltip-when-elided="true" name="create-settings" />
+            <ui:VisualElement style="flex-direction: row;">
+                <uie:ObjectField label="STF Settings Field" name="unity-setting-filed" style="-unity-font-style: normal; margin-left: 3px; margin-right: 0; flex-shrink: 1;" />
+                <ui:Button text="Create" display-tooltip-when-elided="true" name="create-settings" style="flex-shrink: 1; padding-left: 18px; padding-right: 18px;" />
             </ui:VisualElement>
             <uie:EnumField label="Use Mode ?" value="3D,2D,Both(2.5D)" name="unity-drop" />
             <ui:Button text="Apply" display-tooltip-when-elided="true" name="unity-apply" class="applyButton" />
@@ -18,7 +18,7 @@
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement style="justify-content: flex-end; flex-grow: 1; height: 1000px;">
-        <ui:VisualElement name="AreaBottom" style="align-items: stretch;">
+        <ui:VisualElement name="AreaBottom" style="align-items: stretch; margin-bottom: 3px; margin-left: 1px; margin-right: 1px;">
             <uie:EnumField label="Language" name="unity-language" value="English" />
             <uie:EnumField label="Show at StartUp" value="Center" name="unity-show" />
         </ui:VisualElement>
