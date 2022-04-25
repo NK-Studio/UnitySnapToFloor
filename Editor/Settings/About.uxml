@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:VisualElement style="width: 100%; height: 75px; margin-top: 0; margin-bottom: 0; margin-left: 0; margin-right: 0; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; flex-direction: row; align-items: center; justify-content: center;">
-        <ui:VisualElement name="Magnetic-icon" style="background-image: url(&apos;project://database/Assets/Editor/magnet.png?fileID=2800000&amp;guid=eb8607796fcdb0446bd1e943184e9991&amp;type=3#magnet&apos;); width: 45px; height: 27px; -unity-background-scale-mode: scale-to-fit; flex-direction: column-reverse;" />
+        <ui:VisualElement name="Magnetic-icon" style="background-image: url(/Packages/com.nkstudio.snap-to-floor/Editor/magnet.png); width: 45px; height: 27px; -unity-background-scale-mode: scale-to-fit; flex-direction: column-reverse;" />
         <ui:Label text="SnapToFloor" display-tooltip-when-elided="true" style="font-size: 26px; -unity-text-align: middle-center;" />
     </ui:VisualElement>
     <ui:Label text="Version : 2.2.0 LTS" display-tooltip-when-elided="true" style="font-size: 18px; -unity-text-align: upper-center;" />
