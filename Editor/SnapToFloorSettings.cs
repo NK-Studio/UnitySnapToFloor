@@ -15,7 +15,7 @@ public class SnapToFloorEditor : EditorWindow
 
     private static bool ShowOnStartup => EditorPrefs.GetBool(KShowOnStartupPreference, true);
 
-    [MenuItem("Window/SnapToFloor")]
+    [MenuItem("Window/SnapToFloor/settings")]
     public static void Title()
     {
         SnapToFloorEditor wnd = GetWindow<SnapToFloorEditor>();
