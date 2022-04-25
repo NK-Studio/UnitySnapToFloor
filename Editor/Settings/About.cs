@@ -1,13 +1,17 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-
+#define Release
 
 public class About : EditorWindow
 {
+    
+#if Release
     const string k_ResourcePath = "Packages/com.nkstudio.snap-to-floor/Editor/Settings/About.uxml";
-    
-    
+#else
+    const string k_ResourcePath = "Assets/UnitySnapToFloor/Editor/Settings/About.uxml";
+#endif
+
     [MenuItem("Window/SnapToFloor/About")]
     public static void ShowExample()
     {
