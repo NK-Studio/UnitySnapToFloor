@@ -273,6 +273,7 @@ public class SnapToFloorEditor : EditorWindow
             Debug.Log(language == SystemLanguage.Korean ? "STFAsseet파일이 생성 됨" : "stfaasset file is created");
         });
 
+        
         //오브젝트가 변함을 체크
         settingField.RegisterCallback<ChangeEvent<Object>>((evt) =>
         {
@@ -304,8 +305,13 @@ public class SnapToFloorEditor : EditorWindow
             ChangeLanguage(snapToFloorSettings.Language, ref snapToFloorSettings);
         }
     }
-
-
+[MenuItem("gogo/gogosd")]
+    private static void Creaete()
+    {
+        var settings = CreateInstance<SnapToFloorSettings>();
+        AssetDatabase.CreateAsset(settings, "Assets/Settings/STFAsset.asset");
+    }
+    
     private IEnumerator RefreshDefine(SnapToFloorSettings.SnapMode modeIndex, List<string> defines)
     {
         switch (modeIndex)
