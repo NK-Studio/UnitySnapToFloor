@@ -233,13 +233,17 @@ namespace NKStudio
             //스키니드 매쉬 렌더러를 가진 경우 발 밑에서 쏘도록 처리합니다.
             if (meshFilter == null)
             {
-                var position = tr.position;
-                return resultType switch
+                Vector3 position = tr.position;
+
+                switch (resultType)
                 {
-                    ResultType.X => new Vector2(position.x, position.x),
-                    ResultType.Z => new Vector2(position.z, position.z),
-                    _ => throw new ArgumentOutOfRangeException(nameof(resultType), resultType, null)
-                };
+                    case ResultType.X:
+                        return new Vector2(position.x, position.x);
+                    case  ResultType.Z:
+                        return new Vector2(position.z, position.z);
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(resultType), resultType, null);
+                }
             }
 
             var mesh = meshFilter.sharedMesh;
