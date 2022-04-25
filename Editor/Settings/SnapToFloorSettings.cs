@@ -7,7 +7,6 @@ public class SnapToFloorSettings : ScriptableObject
     {
         _3D,
         _2D,
-        Both
     }
     
     public enum ELanguage

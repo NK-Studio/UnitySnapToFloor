@@ -13,14 +13,7 @@ public class SnapToFloorEditor : EditorWindow
 {
     private const string KShowOnStartupPreference = "NKStudio.SnapToFloor.ShowAtStartup";
 
-    private static bool ShowOnStartup
-    {
-        get => EditorPrefs.GetBool(KShowOnStartupPreference, true);
-        set
-        {
-            if (value != ShowOnStartup) EditorPrefs.SetBool(KShowOnStartupPreference, value);
-        }
-    }
+    private static bool ShowOnStartup => EditorPrefs.GetBool(KShowOnStartupPreference, true);
 
     [MenuItem("Window/SnapToFloor")]
     public static void Title()
@@ -34,16 +27,29 @@ public class SnapToFloorEditor : EditorWindow
     [InitializeOnLoadMethod]
     private static void Init()
     {
-        bool autoShowOnStartup = EditorPrefs.GetInt($"SnapToFloor-show-{Application.productName}", 0) == 0;
+        //settings파일의 ID를 가져옵니다.
+        int id = EditorPrefs.GetInt("SettingsInstanceID", 0);
+        string settingsPath = AssetDatabase.GetAssetPath(id);
 
+        //항상 켜지도록 처리
+        bool autoShowOnStartup = true;
+
+        //파일이 있을 경우 파일 데이터 반영
+        if (!settingsPath.Equals(""))
+        {
+            //세팅 데이터를 가져옵니다.
+            SnapToFloorSettings settings = AssetDatabase.LoadAssetAtPath<SnapToFloorSettings>(settingsPath);
+
+            //항상 켜기 일 경우
+            autoShowOnStartup = settings.ShowUp == SnapToFloorSettings.StarUp.Always;
+        }
+
+        //켜지게할지 말지 처리
         if (ShowOnStartup && autoShowOnStartup)
             EditorApplication.update += ShowAtStartup;
     }
 
-    private void OnDestroy()
-    {
-        EditorApplication.update -= ShowAtStartup;
-    }
+    private void OnDestroy() => EditorApplication.update -= ShowAtStartup;
 
     static void ShowAtStartup()
     {
@@ -56,6 +62,9 @@ public class SnapToFloorEditor : EditorWindow
     public void CreateGUI()
     {
         #region 기본 설정
+
+        //사용중인 시스템 언어 가져오기
+        SystemLanguage language = Application.systemLanguage;
 
         // 각 편집기 창에는 루트 VisualElement 개체가 포함되어 있습니다.
         VisualElement root = rootVisualElement;
@@ -91,7 +100,7 @@ public class SnapToFloorEditor : EditorWindow
 
         #endregion
 
-        //settings파일의 ID를 가져옵니다.
+        //ID를 가져와서 경로를 구합니다.
         int id = EditorPrefs.GetInt("SettingsInstanceID", 0);
         string settingsPath = AssetDatabase.GetAssetPath(id);
 
@@ -101,11 +110,19 @@ public class SnapToFloorEditor : EditorWindow
             //에셋 데이터를 가져옵니다.
             settingField.value = AssetDatabase.LoadAssetAtPath<SnapToFloorSettings>(settingsPath);
 
-            //필드에 대입
-            //settingField.value = settings;
-
             //에디터를 세팅합니다.
             EditorSetUp((SnapToFloorSettings) settingField.value);
+        }
+        else
+        {
+            //기초 설정
+            SnapToFloorSettings settings = CreateInstance<SnapToFloorSettings>();
+            settings.Mode = (SnapToFloorSettings.SnapMode) behaviorMode;
+            settings.Language = language == SystemLanguage.Korean
+                ? SnapToFloorSettings.ELanguage.한국어
+                : SnapToFloorSettings.ELanguage.English;
+            settings.ShowUp = SnapToFloorSettings.StarUp.Always;
+            EditorSetUp(settings);
         }
 
         //현재 선택된 빌트 타겟에 처리합니다.
@@ -115,7 +132,11 @@ public class SnapToFloorEditor : EditorWindow
         //모드 변경
         modeDropDown.RegisterValueChangedCallback(evt =>
         {
-            Assert.IsNotNull(settingField.value, "Settings 필드가 Null입니다.");
+            Assert.IsNotNull(settingField.value,
+                language == SystemLanguage.Korean
+                    ? "Mode Error : Settings 필드가 Null입니다."
+                    : "Mode Error : the settings field is null");
+
             SnapToFloorSettings.SnapMode getSnapMode = (SnapToFloorSettings.SnapMode) evt.newValue;
             SnapToFloorSettings settings = (SnapToFloorSettings) settingField.value;
 
@@ -127,15 +148,15 @@ public class SnapToFloorEditor : EditorWindow
                 case SnapToFloorSettings.SnapMode._2D:
                     settings.Mode = SnapToFloorSettings.SnapMode._2D;
                     break;
-                default:
-                    settings.Mode = SnapToFloorSettings.SnapMode.Both;
-                    break;
             }
         });
 
         showDropDown.RegisterValueChangedCallback(evt =>
         {
-            Assert.IsNotNull(settingField.value, "Settings 필드가 Null입니다.");
+            Assert.IsNotNull(settingField.value,
+                language == SystemLanguage.Korean
+                    ? "Start at show Error : Settings 필드가 Null입니다."
+                    : "Start at show Error : the settings field is null");
 
             SnapToFloorSettings.StarUp getShowUp = (SnapToFloorSettings.StarUp) evt.newValue;
             SnapToFloorSettings settings = (SnapToFloorSettings) settingField.value;
@@ -153,13 +174,16 @@ public class SnapToFloorEditor : EditorWindow
 
         languageDropDown.RegisterValueChangedCallback(evt =>
         {
-            Assert.IsNotNull(settingField.value, "Settings 필드가 Null입니다.");
-
+            Assert.IsNotNull(settingField.value,
+                language == SystemLanguage.Korean
+                    ? "Language Error : Settings 필드가 Null입니다."
+                    : "Language Error : the settings field is null");
             SnapToFloorSettings.ELanguage getLanguage = (SnapToFloorSettings.ELanguage) evt.newValue;
             SnapToFloorSettings settings = (SnapToFloorSettings) settingField.value;
 
             ChangeLanguage(getLanguage, ref settings);
         });
+
 
         void ChangeLanguage(SnapToFloorSettings.ELanguage value, ref SnapToFloorSettings settings)
         {
@@ -187,21 +211,35 @@ public class SnapToFloorEditor : EditorWindow
             }
         }
 
-        applyButton.RegisterCallback<MouseUpEvent>(evt =>
+        applyButton.RegisterCallback<MouseUpEvent>(_ =>
         {
-            Assert.IsNotNull(settingField.value, "Settings 필드가 Null입니다.");
+            Assert.IsNotNull(settingField.value,
+                language == SystemLanguage.Korean
+                    ? "Apply Error : Settings 필드가 Null입니다."
+                    : "Apply Error : the settings field is null");
+
             SnapToFloorSettings settings = (SnapToFloorSettings) settingField.value;
 
             EditorCoroutineUtility.StartCoroutineOwnerless(RefreshDefine(settings.Mode, defines));
         });
 
-        createButton.RegisterCallback<MouseUpEvent>(evt =>
+        createButton.RegisterCallback<MouseUpEvent>(_ =>
         {
+            //파일을 가지고 있는지 체크
             bool hasSettingsFile = File.Exists("Assets/Settings/STFAsset.asset");
 
+            //세팅스 프로필
+            SnapToFloorSettings settings;
+
+            //가지고 있다면 에러 표시
             if (hasSettingsFile)
             {
-                Debug.LogWarning("이미 Settings 폴더에 STFAsseet파일이 있습니다.");
+                settings = (SnapToFloorSettings) settingField.value;
+                string warningMsg = settings.Language == SnapToFloorSettings.ELanguage.English
+                    ? "There is already a STFAasset file in the Settings folder."
+                    : "이미 Settings 폴더에 STFAsseet파일이 있습니다.";
+                Debug.LogWarning(warningMsg);
+
                 return;
             }
 
@@ -212,7 +250,7 @@ public class SnapToFloorEditor : EditorWindow
 
             #region 실제 에셋 생성
 
-            SnapToFloorSettings settings = CreateInstance<SnapToFloorSettings>();
+            settings = CreateInstance<SnapToFloorSettings>();
             AssetDatabase.CreateAsset(settings, "Assets/Settings/STFAsset.asset");
 
             #endregion
@@ -220,7 +258,9 @@ public class SnapToFloorEditor : EditorWindow
             #region 값 초기화
 
             settings.Mode = (SnapToFloorSettings.SnapMode) behaviorMode;
-            settings.Language = 0;
+            settings.Language = language == SystemLanguage.Korean
+                ? SnapToFloorSettings.ELanguage.한국어
+                : SnapToFloorSettings.ELanguage.English;
             settings.ShowUp = SnapToFloorSettings.StarUp.Always;
 
             #endregion
@@ -229,7 +269,8 @@ public class SnapToFloorEditor : EditorWindow
             EditorSetUp(settings);
             EditorPrefs.SetInt("SettingsInstanceID", settings.GetInstanceID());
             AssetDatabase.Refresh();
-            Debug.Log("STFAsseet파일이 생성 됨");
+
+            Debug.Log(language == SystemLanguage.Korean ? "STFAsseet파일이 생성 됨" : "stfaasset file is created");
         });
 
         //오브젝트가 변함을 체크
@@ -245,7 +286,7 @@ public class SnapToFloorEditor : EditorWindow
 
             //세팅 값을 넣습니다.
             settingField.value = (SnapToFloorSettings) evt.newValue;
-            
+
             //인스턴스ID를 저장합니다.
             EditorPrefs.SetInt("SettingsInstanceID", settingField.value.GetInstanceID());
 
@@ -253,14 +294,14 @@ public class SnapToFloorEditor : EditorWindow
             EditorSetUp((SnapToFloorSettings) settingField.value);
         });
 
-        void EditorSetUp(SnapToFloorSettings _snapToFloorSettings)
+        void EditorSetUp(SnapToFloorSettings snapToFloorSettings)
         {
-            modeDropDown.Init(_snapToFloorSettings.Mode);
-            showDropDown.Init(_snapToFloorSettings.ShowUp);
-            languageDropDown.Init(_snapToFloorSettings.Language);
+            modeDropDown.Init(snapToFloorSettings.Mode);
+            showDropDown.Init(snapToFloorSettings.ShowUp);
+            languageDropDown.Init(snapToFloorSettings.Language);
 
             //언어 체인지
-            ChangeLanguage(_snapToFloorSettings.Language, ref _snapToFloorSettings);
+            ChangeLanguage(snapToFloorSettings.Language, ref snapToFloorSettings);
         }
     }
 
@@ -278,11 +319,6 @@ public class SnapToFloorEditor : EditorWindow
                 defines.Add("SNAP2FLOOR_2D");
                 defines.Remove("SNAP2FLOOR_3D");
                 defines.Remove("SNAP2FLOOR_BOTH");
-                break;
-            case SnapToFloorSettings.SnapMode.Both:
-                defines.Add("SNAP2FLOOR_BOTH");
-                defines.Remove("SNAP2FLOOR_2D");
-                defines.Remove("SNAP2FLOOR_3D");
                 break;
         }
 
