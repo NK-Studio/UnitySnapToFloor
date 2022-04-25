@@ -13,7 +13,7 @@ public class SnapToFloorEditor : EditorWindow
 {
     private const string KShowOnStartupPreference = "NKStudio.SnapToFloor.ShowAtStartup";
 
-    const string k_ResourcePath = "Packages/UnitySnapToFloor/Editor/SnapToFloor.uxml";
+    const string k_ResourcePath = "Packages/com.nkstudio.snap-to-floor/Editor/SnapToFloor.uxml";
     
     private static bool ShowOnStartup => EditorPrefs.GetBool(KShowOnStartupPreference, true);
 

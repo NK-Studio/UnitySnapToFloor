@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 public class About : EditorWindow
 {
-    const string k_ResourcePath = "Packages/UnitySnapToFloor/Editor/Settings/About.uxml";
+    const string k_ResourcePath = "Packages/com.nkstudio.snap-to-floor/Editor/Settings/About.uxml";
     
     
     [MenuItem("Window/SnapToFloor/About")]
