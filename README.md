@@ -11,4 +11,4 @@
 2.2.0에서 2.5D는 는 제거되었습니다.
 
 사진 클릭시 예시를 볼 수 있습니다.
-[![미리보기 영상](Image~/preview.png)](https://www.youtube.com/watch?v=X-SW5h7bFJY)
+[![미리보기 영상](Image~/preview.png)](https://www.youtube.com/watch?v=fc7Md2kuvP8&t=5s)
