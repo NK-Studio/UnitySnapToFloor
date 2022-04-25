@@ -8,4 +8,6 @@
 
 사진 클릭시 예시를 볼 수 있습니다.
 [![미리보기 영상](Image~/preview.png)](https://www.youtube.com/watch?v=fc7Md2kuvP8&t=5s)
-UnitySnapToFloor
+
+2.2.0부터 초기 세팅이 변경되었습니다.
+추가 튜토리얼 영상 : https://youtu.be/msXxx_wUee8
