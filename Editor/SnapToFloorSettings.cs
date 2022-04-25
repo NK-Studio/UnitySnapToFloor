@@ -305,12 +305,6 @@ public class SnapToFloorEditor : EditorWindow
             ChangeLanguage(snapToFloorSettings.Language, ref snapToFloorSettings);
         }
     }
-[MenuItem("gogo/gogosd")]
-    private static void Creaete()
-    {
-        var settings = CreateInstance<SnapToFloorSettings>();
-        AssetDatabase.CreateAsset(settings, "Assets/Settings/STFAsset.asset");
-    }
     
     private IEnumerator RefreshDefine(SnapToFloorSettings.SnapMode modeIndex, List<string> defines)
     {
