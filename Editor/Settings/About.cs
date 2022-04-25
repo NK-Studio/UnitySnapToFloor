@@ -1,11 +1,13 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEditor.UIElements;
 
 
 public class About : EditorWindow
 {
+    const string k_ResourcePath = "Packages/UnitySnapToFloor/Editor/Settings/About.uxml";
+    
+    
     [MenuItem("Window/SnapToFloor/About")]
     public static void ShowExample()
     {
@@ -21,7 +23,7 @@ public class About : EditorWindow
         VisualElement root = rootVisualElement;
         
         // Import UXML
-        var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/SnapTo/Editor/Settings/About.uxml");
+        var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(k_ResourcePath);
         VisualElement container = visualTree.Instantiate();
         root.Add(container);
     }

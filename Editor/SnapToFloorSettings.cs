@@ -13,6 +13,8 @@ public class SnapToFloorEditor : EditorWindow
 {
     private const string KShowOnStartupPreference = "NKStudio.SnapToFloor.ShowAtStartup";
 
+    const string k_ResourcePath = "Packages/UnitySnapToFloor/Editor/SnapToFloor.uxml";
+    
     private static bool ShowOnStartup => EditorPrefs.GetBool(KShowOnStartupPreference, true);
 
     [MenuItem("Window/SnapToFloor/settings")]
@@ -68,12 +70,9 @@ public class SnapToFloorEditor : EditorWindow
 
         // 각 편집기 창에는 루트 VisualElement 개체가 포함되어 있습니다.
         VisualElement root = rootVisualElement;
-
-        //UXML 경로
-        string path = AssetDatabase.GUIDToAssetPath("5e2b8bced1177ba4fb631ef5aa5fe2eb");
-
+        
         //UXML 가져오기
-        VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(path);
+        VisualTreeAsset visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(k_ResourcePath);
         VisualElement container = visualTree.Instantiate();
         root.Add(container);
 
