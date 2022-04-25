@@ -8,13 +8,12 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UIElements;
-#define Release
 
 public class SnapToFloorEditor : EditorWindow
 {
     private const string KShowOnStartupPreference = "NKStudio.SnapToFloor.ShowAtStartup";
 
-#if Release
+#if true
     const string k_ResourcePath = "Packages/com.nkstudio.snap-to-floor/Editor/SnapToFloor.uxml";
 #else
     const string k_ResourcePath = "Assets/UnitySnapToFloor/Editor/SnapToFloor.uxml";
