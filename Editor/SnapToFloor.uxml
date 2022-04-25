@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <Style src="project://database/Assets/SnapTo/Editor/buttonStyle.uss?fileID=7433441132597879392&amp;guid=35d00d85ba5c0c8498d814b6c5bfb85c&amp;type=3#buttonStyle" />
+    <Style src="/Packages/com.nkstudio.snap-to-floor/Editor/buttonStyle.uss" />
     <ui:VisualElement>
         <ui:Label text="Settings" display-tooltip-when-elided="true" style="font-size: 20px; margin-left: 8px; margin-top: 8px; -unity-font-style: bold;" />
         <ui:VisualElement style="width: 100%; height: 75px; margin-top: 0; margin-bottom: 0; margin-left: 0; margin-right: 0; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; flex-direction: row; align-items: center; justify-content: center;">
