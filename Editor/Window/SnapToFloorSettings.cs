@@ -13,7 +13,7 @@ namespace Plugins.UnitySnapToFloor.Editor.Window
 {
     public class SnapToFloorEditor : EditorWindow
     {
-        private const string KResourcePath = "Packages/com.nkstudio.snap-to-floor/Editor/Window/SnapToFloor.uxml";
+        private const string KResourcePath = "/Packages/com.nkstudio.snap-to-floor/Editor/Window/SnapToFloor.uxml";
 
         private const string KSettingsFileInstallPath = "Assets/Settings/STFAsset.asset";
 
