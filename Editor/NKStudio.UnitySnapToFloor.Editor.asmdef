@@ -1,7 +1,9 @@
 {
     "name": "NKStudio.UnitySnapToFloor.Editor",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:e39b62e89485603448d7808e3084044a"
+    ],
     "includePlatforms": [
         "Editor"
     ],
