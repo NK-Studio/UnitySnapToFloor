@@ -1,29 +1,38 @@
-using UnityEditor;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class SnapToFloorSettings : ScriptableObject
+namespace Plugins.UnitySnapToFloor.Editor.About
 {
-    public enum SnapMode
+    public class SnapToFloorSettings : ScriptableObject
     {
-        _3D,
-        _2D,
-    }
-    
-    public enum ELanguage
-    {
-        English,
-        한국어,
-    }
-    
-    public enum StarUp
-    {
-        Always,
-        Never,
-    }
-    
-    [field: SerializeField] public SnapMode Mode { get; set; }
+        public static readonly Dictionary<KLanguage, List<string>> StartAtShowText = new()
+        {
+            {KLanguage.English, new List<string>() {"Always", "Never",}},
+            {KLanguage.한국어, new List<string>() {"항상", "끄기",}}
+        };
 
-    [field: SerializeField] public ELanguage Language { get; set; }
+        public enum KSnapMode
+        {
+            Mode3D,
+            Mode2D,
+        }
 
-    [field: SerializeField] public StarUp ShowUp { get; set; }
+        public enum KLanguage
+        {
+            English,
+            한국어,
+        }
+
+        public enum KStartAtShow
+        {
+            Always,
+            Never,
+        }
+
+        [field: SerializeField] public KSnapMode Mode { get; set; }
+
+        [field: SerializeField] public KLanguage Language { get; set; }
+
+        [field: SerializeField] public KStartAtShow StartAtShow { get; set; }
+    }
 }
