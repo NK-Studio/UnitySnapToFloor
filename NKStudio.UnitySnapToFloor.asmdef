@@ -1,12 +1,12 @@
 {
-    "name": "NKStudio.UnitySnapToFloor.Editor",
+    "name": "NKStudio.UnitySnapToFloor",
     "rootNamespace": "",
     "references": [],
     "includePlatforms": [
         "Editor"
     ],
     "excludePlatforms": [],
-    "allowUnsafeCode": false,
+    "allowUnsafeCode": true,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
