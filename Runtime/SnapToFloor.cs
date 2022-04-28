@@ -2,7 +2,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-namespace NKStudio
+namespace NKStudio.UnitySnapToFloor
 {
     public class SnapToFloor : MonoBehaviour
     {

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Plugins.UnitySnapToFloor.Editor.About
+namespace NKStudio.UnitySnapToFloor
 {
     public class SnapToFloorSettings : ScriptableObject
     {
