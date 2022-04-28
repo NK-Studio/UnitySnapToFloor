@@ -1,0 +1,12 @@
+.applyButton {
+}
+
+.applyButton:active {
+    background-color: rgb(70, 96, 124);
+}
+
+.unity-enum-field {
+}
+
+.unity-base-field {
+}
