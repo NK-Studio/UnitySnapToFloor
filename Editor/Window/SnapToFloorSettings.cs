@@ -27,7 +27,7 @@ namespace NKStudio.UnitySnapToFloor.Editor
             wnd.maxSize = new Vector2(400, 360);
         }
 
-#if false
+#if true
         [MenuItem("Window/SnapToFloor/UnInstall")]
         public static void UnInstall()
         {
