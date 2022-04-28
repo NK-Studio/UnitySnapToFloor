@@ -9,11 +9,15 @@ using UnityEngine.Assertions;
 using UnityEngine.UIElements;
 using Object = UnityEngine.Object;
 
-namespace Plugins.UnitySnapToFloor.Editor.Window
+namespace UnitySnapToFloor.Editor.Window
 {
     public class SnapToFloorEditor : EditorWindow
     {
+#if false
         private const string KResourcePath = "Packages/com.nkstudio.snap-to-floor/Editor/Window/SnapToFloor.uxml";
+#else
+        private const string KResourcePath = "Assets/UnitySnapToFloor/Editor/Window/SnapToFloor.uxml";
+#endif
 
         private const string KSettingsFileInstallPath = "Assets/Settings/STFAsset.asset";
 

@@ -2,12 +2,15 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Plugins.UnitySnapToFloor.Editor.About
+namespace UnitySnapToFloor.Editor.About
 {
     public class About : EditorWindow
     {
+#if false
         private const string KResourcePath = "Packages/com.nkstudio.snap-to-floor/Editor/About/About.uxml";
-    
+#else
+        private const string KResourcePath = "Assets/UnitySnapToFloor/Editor/About/About.uxml";
+#endif
         [MenuItem("Window/SnapToFloor/About")]
         public static void ShowExample()
         {
@@ -21,7 +24,7 @@ namespace Plugins.UnitySnapToFloor.Editor.About
         {
             // Each editor window contains a root VisualElement object
             VisualElement root = rootVisualElement;
-        
+
             // Import UXML
             var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(KResourcePath);
             VisualElement container = visualTree.Instantiate();
