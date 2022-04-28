@@ -2,7 +2,7 @@
 
 중요! : Skinned Mesh Renderer는 중심 앵커가 발 밑에 있어야 재대로 동작합니다.
 
-[nityPackage](https://github.com/NK-Studio/UnitySnapToFloor/releases/tag/2.3.0LTS)로 설치하기
+[UnityPackage](https://github.com/NK-Studio/UnitySnapToFloor/releases/tag/2.3.0LTS)로 설치하기
 
 ### Unity 2021.Ver or later
 
