@@ -4,7 +4,12 @@ using UnityEngine.UIElements;
 
 public class About : EditorWindow
 {
-    private const string KResourcePath = "Packages/com.nkstudio.snap-to-floor/Editor/About/About.uxml";
+    
+#if true
+    const string k_ResourcePath = "Packages/com.nkstudio.snap-to-floor/Editor/Settings/About.uxml";
+#else
+    const string k_ResourcePath = "Assets/UnitySnapToFloor/Editor/Settings/About.uxml";
+#endif
 
     [MenuItem("Window/SnapToFloor/About")]
     public static void ShowExample()
@@ -19,9 +24,9 @@ public class About : EditorWindow
     {
         // Each editor window contains a root VisualElement object
         VisualElement root = rootVisualElement;
-
+        
         // Import UXML
-        var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(KResourcePath);
+        var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(k_ResourcePath);
         VisualElement container = visualTree.Instantiate();
         root.Add(container);
     }

@@ -2,7 +2,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-namespace NKStudio.UnitySnapToFloor
+namespace NKStudio
 {
     public class SnapToFloor : MonoBehaviour
     {
@@ -19,17 +19,6 @@ namespace NKStudio.UnitySnapToFloor
         [MenuItem("Edit/SnapToFloor _END")]
         public static void Snap2Surface()
         {
-            int id = EditorPrefs.GetInt("SettingsInstanceID", -1);
-            string path = AssetDatabase.GetAssetPath(id);
-            if (string.IsNullOrEmpty(path))
-            {
-                bool isKr = Application.systemLanguage == SystemLanguage.Korean;
-                Debug.LogError(isKr
-                    ? "SnapToFloor 세팅에 Settings Asset이 참조되어있지 않습니다."
-                    : "Settings Asset is not referenced in the SnapToFloor settings.");
-                return;
-            }
-            
             //Selection은 현재 에디터에서 선택된 오브젝트를 뜻한다.
             foreach (var transform in Selection.transforms)
             {

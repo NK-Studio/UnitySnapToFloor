@@ -1,7 +1,10 @@
 {
   "name": "com.nkstudio.snap-to-floor",
-  "version": "2.3.1",
+  "version": "2.2.0",
   "displayName": "SnapToFloor",
   "unity": "2019.1",
-  "description": "Select the object and press the 'End' key to snap to the ground."
+  "description": "Select the object and press the 'End' key to snap to the ground.",
+  "dependencies": {
+    "com.unity.editorcoroutines": "1.0.0"
+  }
 }
