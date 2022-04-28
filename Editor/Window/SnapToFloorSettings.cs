@@ -78,22 +78,7 @@ public class SnapToFloorEditor : EditorWindow
     [InitializeOnLoadMethod]
     private static void Initialize()
     {
-        //settings파일의 ID를 가져옵니다.
-        int id = EditorPrefs.GetInt("SettingsInstanceID", -1);
-        string settingsPath = AssetDatabase.GetAssetPath(id);
-        bool hasSettingsFile = !string.IsNullOrEmpty(settingsPath);
 
-        //파일이 있을 경우 파일 데이터 반영
-        if (hasSettingsFile)
-        {
-            SnapToFloorSettings instance = AssetDatabase.LoadAssetAtPath<SnapToFloorSettings>(settingsPath);
-            bool showOnStartup = instance.StartAtShow == SnapToFloorSettings.KStartAtShow.Always;
-
-            if (showOnStartup)
-                EditorApplication.update += ShowAtStartup;
-        }
-        else
-            EditorApplication.update += ShowAtStartup;
     }
 
     private void OnDestroy() => EditorApplication.update -= ShowAtStartup;
