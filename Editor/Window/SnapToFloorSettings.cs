@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using Plugins.UnitySnapToFloor.Editor.About;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -13,7 +12,7 @@ namespace NKStudio.UnitySnapToFloor
 {
     public class SnapToFloorEditor : EditorWindow
     {
-        private const string KResourcePath = "Assets/Plugins/UnitySnapToFloor/Editor/Window/SnapToFloor.uxml";
+        private const string KResourcePath = "Packages/com.nkstudio.snap-to-floor/Editor/Window/SnapToFloor.uxml";
 
         private const string KSettingsFileInstallPath = "Assets/Settings/STFAsset.asset";
 

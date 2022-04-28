@@ -6,7 +6,7 @@ namespace NKStudio.UnitySnapToFloor
 {
     public class About : EditorWindow
     {
-        private const string KResourcePath = "Assets/Plugins/UnitySnapToFloor/Editor/About/About.uxml";
+        private const string KResourcePath = "Packages/com.nkstudio.snap-to-floor/Editor/About/About.uxml";
     
         [MenuItem("Window/SnapToFloor/About")]
         public static void ShowExample()
