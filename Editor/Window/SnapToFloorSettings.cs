@@ -8,7 +8,7 @@ using UnityEngine.Assertions;
 using UnityEngine.UIElements;
 using Object = UnityEngine.Object;
 
-namespace NKStudio.UnitySnapToFloor
+namespace NKStudio.UnitySnapToFloor.Editor
 {
     public class SnapToFloorEditor : EditorWindow
     {

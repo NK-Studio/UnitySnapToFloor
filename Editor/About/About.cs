@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace NKStudio.UnitySnapToFloor
+namespace NKStudio.UnitySnapToFloor.Editor
 {
     public class About : EditorWindow
     {
