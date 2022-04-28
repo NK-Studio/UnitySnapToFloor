@@ -1,0 +1,27 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+  <Style src="/Packages/com.nkstudio.snap-to-floor/Editor/Window/buttonStyle.uss" />
+<ui:VisualElement>
+        <ui:Label text="Settings" display-tooltip-when-elided="true" style="font-size: 20px; margin-left: 8px; margin-top: 8px; -unity-font-style: bold;" />
+        <ui:VisualElement style="width: 100%; height: 75px; margin-top: 0; margin-bottom: 0; margin-left: 0; margin-right: 0; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; flex-direction: row; align-items: center; justify-content: center;">
+            <ui:VisualElement name="Magnetic-icon" class="icon" style="width: 45px; height: 27px; flex-direction: column-reverse; -unity-background-scale-mode: scale-to-fit; background-image: url(/Packages/com.nkstudio.snap-to-floor/Editor/Icon/magnet.png);" />
+            <ui:VisualElement class="icon" />
+            <ui:Label text="SnapToFloor" display-tooltip-when-elided="true" style="font-size: 26px; -unity-text-align: middle-center;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Area" style="height: auto; flex-direction: column; width: auto; justify-content: flex-start; align-items: stretch;">
+            <ui:VisualElement style="flex-direction: row;">
+                <uie:ObjectField label="STF Settings Field" name="setting-Filed" style="-unity-font-style: normal; margin-left: 3px; margin-right: 0; flex-shrink: 1;" />
+                <ui:Button text="Create" display-tooltip-when-elided="true" name="createSettings-Button" style="flex-shrink: 1; padding-left: 18px; padding-right: 18px;" />
+            </ui:VisualElement>
+            <ui:DropdownField label="Use Mode ?" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="mode-DropDown" />
+            <ui:Button text="Apply" display-tooltip-when-elided="true" name="apply-Button" class="applyButton" />
+            <ui:Label text="How to use ?" display-tooltip-when-elided="true" name="howToUse-Text" style="white-space: normal; margin-left: 3px; margin-right: 3px; margin-top: 5px; margin-bottom: 1px; -unity-font-style: bold;" />
+            <ui:Label display-tooltip-when-elided="true" text="Check whether the Unity mode is 2D or 3D." name="description-Text" style="white-space: normal; margin-left: 3px; margin-right: 3px; margin-top: 2px; margin-bottom: 1px; height: 34px; -unity-text-align: upper-left;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement style="justify-content: flex-end; flex-grow: 1; height: 1000px;">
+        <ui:VisualElement name="AreaBottom" style="align-items: stretch; margin-bottom: 3px; margin-left: 1px; margin-right: 1px;">
+            <ui:DropdownField label="Language" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="language-DropDown" />
+            <ui:DropdownField label="Show at StartUp" index="-1" name="startAtShow-DropDown" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
